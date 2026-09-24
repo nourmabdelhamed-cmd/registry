@@ -12,6 +12,12 @@ terraform {
 provider "coder" {
 }
 
+# Require the workspace owner to link GitHub before the workspace starts. The
+# provider ID must match the Coder deployment's external-auth configuration.
+data "coder_external_auth" "github" {
+  id = "github"
+}
+
 variable "use_kubeconfig" {
   type        = bool
   description = <<-EOF

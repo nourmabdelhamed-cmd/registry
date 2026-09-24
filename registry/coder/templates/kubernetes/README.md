@@ -35,6 +35,16 @@ More language-specific images (Go, Java, Node.js, and more) are available in [co
 
 This template authenticates using a `~/.kube/config`, if present on the server, or via built-in authentication if the Coder provisioner is running on Kubernetes with an authorized ServiceAccount. To use another [authentication method](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#authentication), edit the template.
 
+Workspaces also require the owner to authenticate with the Coder deployment's
+`github` external-auth provider before starting. This makes the GitHub token
+available to workspace Git tooling. Configure or
+enable a provider with the ID `github` on the Coder deployment; the default
+GitHub provider is enabled by `k8s/plugins/coder/values.yaml`.
+
+The `coder_external_auth` block is required, so a workspace cannot start until
+the owner completes the GitHub authorization flow. If GitHub access should be
+optional for a derived template, set `optional = true` on that data source.
+
 ## Architecture
 
 This template provisions the following resources:
